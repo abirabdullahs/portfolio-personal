@@ -1,0 +1,13 @@
+.imported-bg {
+  background-image: url('../assets/images/background.jpg');
+  height: 150px;
+  width: 100%;
+  background-size: cover;
+  margin-bottom: 1rem;
+}
+.public-bg {
+  background-image: url('/images/banner.jpg');
+  height: 150px;
+  width: 100%;
+  background-size: cover;
+}
