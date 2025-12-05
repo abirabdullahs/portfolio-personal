@@ -16,7 +16,7 @@ const ProductsPreview = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
-    const unsub = onSnapshot(collection(db, "products"), (querySnapshot) => {
+    const unsub = onSnapshot(collection(db, "productsPublications"), (querySnapshot) => {
       setProducts(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     });
     return () => unsub();
@@ -33,11 +33,11 @@ const ProductsPreview = () => {
       >
         Products & Publications
       </motion.h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full max-w-5xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full max-w-5xl place-items-center">
         {products.length === 0 ? (
           <div className="text-gray-400">No products available.</div>
         ) : (
-          products.slice(0, 6).map(product => (
+          products.slice(0, 3).map(product => (
             <motion.div
               key={product.id}
               className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-lg p-4 flex flex-col items-center border border-blue-400/30 hover:scale-105 hover:shadow-blue-400 transition-transform duration-300 cursor-pointer"
@@ -48,10 +48,19 @@ const ProductsPreview = () => {
               variants={gridVariants}
               onClick={() => { setSelectedProduct(product); setModalOpen(true); }}
             >
-              <img src={product.image} alt={product.name} className="w-full h-32 object-cover rounded-xl mb-3" />
+              <img src={product.coverImage} alt={product.name} className="w-[210px] h-[297px] object-cover rounded-xl mb-3" />
               <h3 className="text-lg font-bold text-white mb-1">{product.name}</h3>
+              <div className="text-blue-300 font-bold text-xl mb-2">{product.price ? `${product.price}৳` : ''}</div>
               <div className="text-xs text-gray-200 mb-2 whitespace-pre-line line-clamp-3">{product.description}</div>
-              <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-600 text-white mt-2">{product.status}</span>
+              {product.status === "Pre-book" ? (
+                <a href={product.link || "#"} target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-yellow-500 text-white rounded font-semibold text-lg mt-2">
+                  Pre-Book
+                </a>
+              ) : product.status === "Shop Now" ? (
+                <a href={product.link || "#"} target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-blue-600 text-white rounded font-semibold text-lg mt-2">
+                  Shop Now
+                </a>
+              ) : null}
             </motion.div>
           ))
         )}
@@ -67,12 +76,19 @@ const ProductsPreview = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg max-w-md w-full p-6 relative">
             <button className="absolute top-2 right-2 px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded" onClick={() => setModalOpen(false)}>✕</button>
-            <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full h-40 object-cover rounded mb-4" />
+            <img src={selectedProduct.coverImage} alt={selectedProduct.name} className="w-full h-40 object-cover rounded mb-4" />
             <h2 className="text-xl font-bold mb-2 text-blue-600 dark:text-blue-300">{selectedProduct.name}</h2>
+            <div className="text-blue-600 font-bold text-2xl mb-2">{selectedProduct.price ? `${selectedProduct.price}৳` : ''}</div>
             <div className="text-gray-700 dark:text-gray-200 mb-4">{selectedProduct.description}</div>
-            <a href={selectedProduct.link || "#"} target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-blue-600 text-white rounded font-semibold hover:bg-blue-700 transition">
-              {selectedProduct.status === "Pre-book" ? "Pre-Book" : "Shop Now"}
-            </a>
+            {selectedProduct.status === "Pre-book" ? (
+              <a href={selectedProduct.link || "#"} target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-yellow-500 text-white rounded font-semibold text-lg">
+                Pre-Book
+              </a>
+            ) : selectedProduct.status === "Shop Now" ? (
+              <a href={selectedProduct.link || "#"} target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-blue-600 text-white rounded font-semibold text-lg">
+                Shop Now
+              </a>
+            ) : null}
           </div>
         </div>
       )}

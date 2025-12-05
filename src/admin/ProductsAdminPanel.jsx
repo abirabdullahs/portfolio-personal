@@ -317,6 +317,8 @@ export default function ProductsAdminPanel() {
                 value={form.status}
                 onChange={e => setForm(f => ({ ...f, status: e.target.value }))}
               >
+                <option value="Shop Now">Shop Now</option>
+                <option value="Pre-book">Pre-book</option>
                 <option value="Published">Published</option>
                 <option value="Draft">Draft</option>
                 <option value="Coming Soon">Coming Soon</option>

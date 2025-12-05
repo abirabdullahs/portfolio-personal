@@ -21,12 +21,12 @@ const BlogsPreview = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
-    const q = query(collection(db, "blogs"), orderBy("timestamp", "desc"), limit(8));
-    const unsub = onSnapshot(q, (querySnapshot) => {
+    const unsub = onSnapshot(collection(db, "blogs"), (querySnapshot) => {
       setBlogs(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     });
     return () => unsub();
   }, []);
+
 
   const filteredBlogs = selectedCategory === "All"
     ? blogs
@@ -54,18 +54,18 @@ const BlogsPreview = () => {
           </button>
         ))}
       </div>
-      <div className="w-full max-w-5xl overflow-x-auto pb-2">
-        <div className="flex gap-6 min-w-[320px]">
+      <div className="w-full max-w-5xl pb-2">
+        <div className="flex gap-6 flex-col md:flex-row justify-center items-center">
           {filteredBlogs.length === 0 ? (
             <div className="text-gray-400">No blogs available.</div>
           ) : (
-            filteredBlogs.map(blog => (
+            filteredBlogs.slice(0, 3).map(blog => (
               <motion.a
                 key={blog.id}
                 href={blog.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="min-w-[280px] bg-white/10 backdrop-blur-lg rounded-2xl shadow-lg flex flex-col items-center p-4 border border-purple-400/30 hover:scale-105 hover:shadow-purple-400 transition-transform duration-300 cursor-pointer"
+                className="flex-shrink-0 w-[280px] bg-white/10 backdrop-blur-lg rounded-2xl shadow-lg flex flex-col items-center p-4 border border-purple-400/30 hover:scale-105 hover:shadow-purple-400 transition-transform duration-300 cursor-pointer"
                 whileHover={{ scale: 1.08 }}
                 initial="hidden"
                 whileInView="visible"
@@ -73,14 +73,17 @@ const BlogsPreview = () => {
                 variants={sliderVariants}
               >
                 <img src={blog.image} alt={blog.name} className="w-full h-32 object-cover rounded-xl mb-3" />
-                <h3 className="text-lg font-bold text-white mb-1">{blog.name}</h3>
-                <div className="text-xs text-gray-200 mb-2 whitespace-pre-line line-clamp-3">{blog.details}</div>
-                <span className={`px-3 py-1 rounded-full text-xs font-bold mt-2 ${categoryColors[blog.category] || "bg-purple-600/80"}`}>{blog.category}</span>
+                <h3 className="text-lg font-bold text-white mb-1 h-20 overflow-hidden text-ellipsis">{blog.name}</h3>
+                <div className="text-xs text-gray-200 mb-2 h-12 overflow-hidden text-ellipsis">{blog.details}</div>
+                <span className={`px-3 py-1 rounded-full text-xs font-bold mt-2 ${categoryColors[blog.category] || "bg-purple-600/80"}`}>
+                  {blog.category}
+                </span>
               </motion.a>
             ))
           )}
         </div>
       </div>
+
       <a
         href="/Blog"
         className="mt-6 px-6 py-2 rounded-xl bg-white/10 backdrop-blur-lg shadow text-purple-300 border border-purple-400 hover:bg-purple-500 hover:text-white transition-all duration-300 glow-btn"

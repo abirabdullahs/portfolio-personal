@@ -17,9 +17,11 @@ const awards = [
   'Multiple contest ranks and recognitions',
 ];
 
+import SEO from "../../components/SEO";
 export default function Achievements() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-10 px-4">
+      <SEO title="Achievements — Abir Hossen Abdullah" description="Programming contest achievements, awards, certificates and recognitions of Abir Hossen Abdullah." url="https://abirabdullah.web.app/achievements" />
       <div className="max-w-5xl mx-auto flex flex-col gap-10">
         {/* Certificates */}
         <div>

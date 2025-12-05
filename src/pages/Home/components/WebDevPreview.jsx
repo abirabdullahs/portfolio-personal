@@ -14,12 +14,16 @@ const WebDevPreview = () => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    const q = query(collection(db, "webProjects"), orderBy("timestamp", "desc"), limit(6));
-    const unsub = onSnapshot(q, (querySnapshot) => {
+  const unsub = onSnapshot(
+    collection(db, "webProjects"),
+    (querySnapshot) => {
       setProjects(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-    });
-    return () => unsub();
-  }, []);
+    }
+  );
+
+  return () => unsub(); // unsubscribe on unmount
+}, []);
+
 
   return (
     <section className="w-full py-12 px-4 flex flex-col items-center">

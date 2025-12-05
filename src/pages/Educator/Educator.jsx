@@ -1,4 +1,5 @@
 import React from "react";
+import SEO from "../../components/SEO";
 
 const subjects = [
   'HSC Chemistry',
@@ -71,6 +72,7 @@ const platforms = [
 export default function Educator() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 py-10 px-4">
+      <SEO title="Educator — Abir Hossen Abdullah" description="Abir Hossen Abdullah — Educator & Mentor. Teaching Chemistry, Physics, Math & Programming with interactive learning." url="https://abirabdullah.web.app/educator" />
       <div className="max-w-6xl mx-auto flex flex-col gap-16">
         {/* Header */}
         <header className="text-center mb-10">

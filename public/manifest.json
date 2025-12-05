@@ -1,0 +1,23 @@
+{
+  "name": "MD Abir Hossen Abdullah | portfolio",
+  "short_name": "Abir Hossen Abdullah",
+  "nick_name":"abir abdullah",
+  "description": "Personal portfolio website of Abir Abdullah. Showcasing achievements, blog, projects, and more.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "public/personal.jpg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "public/assets/images/portfolio.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "lang": "en" 
+}

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://abirabdullah.web.app/sitemap.xml
+
+# Explicitly allow Googlebot
+User-agent: Googlebot
+Allow: /

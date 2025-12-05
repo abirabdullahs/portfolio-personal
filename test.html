@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chapter Cards — Locked / Purchase UI</title>
+
+  <!-- Tailwind CDN (for quick demo). Replace with your build for production -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{--glass-bg: rgba(255,255,255,0.06);--glass-border: rgba(255,255,255,0.08);} 
+    body{font-family:'Quicksand',system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial}
+
+    /* small glassmorphism card polish */
+    .glass {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(6px) saturate(120%);
+      -webkit-backdrop-filter: blur(6px) saturate(120%);
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.45);
+    }
+
+    /* glowing button */
+    .glow-btn{
+      box-shadow: 0 6px 24px rgba(99,102,241,0.15), inset 0 1px 0 rgba(255,255,255,0.04);
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .glow-btn:active{transform: translateY(1px)}
+
+    /* lock overlay */
+    .locked-overlay{
+      background: linear-gradient(180deg, rgba(2,6,23,0.55), rgba(2,6,23,0.6));
+      border-radius: 12px;
+      inset: 0;
+      display:flex;align-items:center;justify-content:center;flex-direction:column;
+    }
+
+    /* small badge */
+    .badge{background:linear-gradient(90deg,#7c3aed,#06b6d4);padding:6px 10px;border-radius:999px;color:white;font-weight:600;font-size:.85rem}
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 min-h-screen text-slate-100 p-6">
+
+  <div class="max-w-5xl mx-auto">
+    <header class="mb-8 flex items-center justify-between">
+      <h1 class="text-2xl font-bold">Chapters</h1>
+      <p class="text-sm text-slate-400">Locked chapters show a lock icon and purchase option</p>
+    </header>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- free / unlocked card -->
+      <div class="glass p-4 relative">
+        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop" alt="Lecture" class="w-full h-36 object-cover rounded-lg mb-3" />
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="font-semibold">Chapter 1 — Basics</h2>
+          <span class="badge">Free</span>
+        </div>
+        <p class="text-sm text-slate-300 mb-3">Lecture notes, flowchart & quiz</p>
+        <div class="flex gap-2">
+          <button class="px-3 py-2 rounded-lg glow-btn bg-white/6 border border-white/5 text-sm">Open</button>
+          <button class="px-3 py-2 rounded-lg bg-white/4 text-sm">Download PDF</button>
+        </div>
+      </div>
+
+      <!-- locked / purchase card -->
+      <div class="glass p-0 overflow-hidden relative">
+        <div class="relative">
+          <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop" alt="Locked lecture" class="w-full h-40 object-cover" />
+          <!-- Lock overlay -->
+          <div class="locked-overlay absolute top-3 left-3 right-3 bottom-3 text-center text-slate-50 p-4">
+            <!-- lock icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="11" width="18" height="10" rx="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <div class="text-sm opacity-95 font-semibold">Premium Chapter</div>
+            <div class="text-xs text-slate-300 mt-1">Purchase to unlock full notes & PDFs</div>
+          </div>
+        </div>
+
+        <div class="p-4">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-semibold">Chapter 5 — Advanced Topics</h3>
+            <span class="text-sm text-slate-300">35 slides</span>
+          </div>
+          <p class="text-sm text-slate-300 mb-4">Detailed formula modal, solved questions and MCQs.</p>
+          <div class="flex gap-3">
+            <button id="buyBtn" class="ml-auto px-4 py-2 rounded-lg glow-btn bg-gradient-to-r from-violet-600 to-cyan-500 text-white font-semibold">Buy - ৳150</button>
+            <button id="previewBtn" class="px-3 py-2 rounded-lg bg-white/6 border border-white/5 text-sm">Preview</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- another locked compact card -->
+      <div class="glass p-4 relative">
+        <div class="flex items-start gap-3 mb-3">
+          <div class="w-16 h-16 bg-white/4 rounded-lg flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 11V7a3 3 0 0 1 6 0v4"></path><rect x="3" y="11" width="18" height="10" rx="2"></rect></svg>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center justify-between">
+              <div class="font-semibold">Chapter 6 — Practice Set</div>
+              <div class="text-xs text-slate-300">Locked</div>
+            </div>
+            <p class="text-xs text-slate-400 mt-2">MCQ bank + solutions</p>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <button class="px-3 py-2 rounded-lg bg-white/6 border border-white/5 text-sm">Preview</button>
+          <button class="px-3 py-2 rounded-lg text-sm border border-white/6">Buy</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Purchase Modal -->
+  <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 px-4">
+    <div class="glass max-w-md w-full p-6">
+      <h3 class="text-lg font-semibold mb-2">Confirm Purchase</h3>
+      <p class="text-sm text-slate-300 mb-4">Chapter 5 — Advanced Topics<br>Price: ৳150</p>
+      <div class="flex gap-2 justify-end">
+        <button id="cancel" class="px-4 py-2 rounded-lg bg-white/6">Cancel</button>
+        <button id="confirm" class="px-4 py-2 rounded-lg bg-gradient-to-r from-violet-600 to-cyan-500 text-white font-semibold">Confirm & Unlock</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('modal');
+    const buyBtn = document.getElementById('buyBtn');
+    const cancel = document.getElementById('cancel');
+    const confirm = document.getElementById('confirm');
+
+    buyBtn.addEventListener('click', () => modal.classList.remove('hidden'));
+    cancel.addEventListener('click', () => modal.classList.add('hidden'));
+
+    // Simulated purchase: unlock UI after confirmation
+    confirm.addEventListener('click', () => {
+      modal.classList.add('hidden');
+      // Find the locked card overlay and remove it
+      const overlay = document.querySelector('.locked-overlay');
+      if(overlay) overlay.remove();
+
+      // change buy button to 'Open'
+      buyBtn.textContent = 'Open';
+      buyBtn.classList.remove('bg-gradient-to-r');
+      buyBtn.classList.remove('from-violet-600');
+      buyBtn.classList.remove('to-cyan-500');
+      buyBtn.classList.add('bg-white/6');
+      buyBtn.addEventListener('click', ()=> alert('Opening chapter...'));
+
+      // small toast
+      const t = document.createElement('div');
+      t.className = 'fixed right-6 bottom-6 glass px-4 py-2 rounded-lg';
+      t.textContent = 'Unlocked! Chapter 5 is now available.';
+      document.body.appendChild(t);
+      setTimeout(()=> t.remove(), 2500);
+    });
+  </script>
+
+</body>
+</html>

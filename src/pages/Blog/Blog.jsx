@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { app } from "../../firebase";
 import { getFirestore, collection , onSnapshot } from "firebase/firestore";
+import SEO from "../../components/SEO";
 
 export default function Blog() {
   const [blogs, setBlogs] = useState([]);
@@ -21,6 +22,7 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-10 px-4 font-bangla">
+      <SEO title="Blog — Abir Hossen Abdullah" description="Read blog posts by Abir Hossen Abdullah on programming, technology, and education." url="https://abirabdullah.web.app/blog" />
       <div className="max-w-6xl mx-auto flex flex-col gap-8">
         {/* All Blog Posts from Firebase */}
         {loading ? (
@@ -41,9 +43,7 @@ export default function Blog() {
             {blogs.map((blog) => (
               <a
                 key={blog.id}
-                href={blog.link}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`/blog/${blog.id}`}
                 className="flex flex-col md:flex-row bg-white/30 dark:bg-gray-800/40 backdrop-blur-lg rounded-2xl shadow-lg overflow-hidden transform transition hover:scale-105 hover:shadow-2xl"
               >
                 <div className="md:w-1/3 h-48 md:h-auto overflow-hidden flex items-center justify-center">

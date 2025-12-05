@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import SEO from "../../components/SEO";
 import portfolioImg from '../../assets/images/portfolio.png';
 import { app } from "../../firebase";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
@@ -43,6 +44,7 @@ export default function WebDeveloperEnhanced() {
   const projects = useWebProjects();
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-[#0f172a] dark:to-[#071029] py-12 px-6">
+      <SEO title="Web Developer — Abir Hossen Abdullah" description="Web development projects, MERN stack, Next.js, APIs, and full-stack portfolio by Abir Hossen Abdullah." url="https://abirabdullah.web.app/web-developer" />
       <div className="max-w-7xl mx-auto space-y-10">
         {/* Header */}
         <header className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">

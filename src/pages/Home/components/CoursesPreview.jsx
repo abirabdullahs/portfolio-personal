@@ -31,12 +31,12 @@ const CoursesPreview = () => {
       >
         Featured Courses
       </motion.h2>
-      <div className="w-full max-w-5xl overflow-x-auto pb-2">
-        <div className="flex gap-6 min-w-[320px]">
+      <div className="w-full max-w-5xl pb-2">
+        <div className="flex gap-6 min-w-[320px] flex-col md:flex-row justify-center items-center">
           {courses.length === 0 ? (
             <div className="text-gray-400">No courses available.</div>
           ) : (
-            courses.map(course => (
+            courses.slice(0, 3).map(course => (
               <motion.div
                 key={course.id}
                 className="min-w-[280px] bg-white/10 backdrop-blur-lg rounded-2xl shadow-lg flex flex-col items-center p-4 border border-pink-400/30 hover:scale-105 hover:shadow-pink-400 transition-transform duration-300 cursor-pointer"
@@ -46,7 +46,7 @@ const CoursesPreview = () => {
                 viewport={{ once: true, amount: 0.3 }}
                 variants={sliderVariants}
               >
-                <img src={course.image} alt={course.name} className="w-full h-32 object-cover rounded-xl mb-3" />
+                <img src={course.image} alt={course.name} className="w-full h-45 object-cover rounded-xl mb-3" />
                 <div className="flex gap-2 mb-2">
                   <span className="bg-blue-600/80 text-white px-2 py-1 rounded-full text-xs font-semibold">{course.batch}</span>
                   <span className="bg-green-600/80 text-white px-2 py-1 rounded-full text-xs font-semibold">{course.fee}৳</span>

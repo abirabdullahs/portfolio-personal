@@ -36,7 +36,7 @@ const AchievementsPreview = () => {
         {achievements.length === 0 ? (
           <div className="text-gray-400">No achievements available.</div>
         ) : (
-          achievements.map((ach, idx) => (
+          achievements.slice(0, 3).map((ach, idx) => (
             <motion.div
               key={ach.id}
               className={`relative bg-white/10 backdrop-blur-lg rounded-2xl shadow-lg p-6 border border-yellow-400/30 flex items-center gap-6 ${idx % 2 === 0 ? 'ml-0 md:ml-12' : 'mr-0 md:mr-12'}`}
